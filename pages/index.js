@@ -1,3 +1,12 @@
+import { createClient } from "next-sanity";
+
+const client = createClient({
+  projectId: "q59x6qvq",
+  dataset: "production",
+  apiVersion: "2022-03-25",
+  useCdn: false
+});
+
 export default function IndexPage({ pets }) {
   return (
     <>
@@ -34,16 +43,18 @@ export default function IndexPage({ pets }) {
 }
 
 export async function getStaticProps() {
-  const pets = [
-    /* {
-      _createdAt: "2022-03-08T09:28:00Z",
-      _id: "1f69c53d-418a-452f-849a-e92466bb9c75",
-      _rev: "xnBg0xhUDzo561jnWODd5e",
-      _type: "pet",
-      _updatedAt: "2022-03-08T09:28:00Z",
-      name: "Bamse"
-    } */
-  ];
+  // const pets = [
+  //   {
+  //     "_id": "09d413e8-ddff-4d81-8739-9c58185f25fc",
+  //     "_rev": "qpwyF0fxEtz8eBjjOfPijy",
+  //     "_type": "pet",
+  //     "name": "Chandima",
+  //     "_createdAt": "2023-04-26T02:04:58.455002130Z",
+  //     "_updatedAt": "2023-04-26T02:04:57.735Z"
+  //   }
+  // ];
+
+  const pets = await client.fetch(`*[_type == "pet"]`);
 
   return {
     props: {
